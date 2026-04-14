@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -26,7 +26,7 @@ jobs:
         run: |
           find . -name "*.php" -exec php -l {} \;
 
-      - name: Install PHPCS & WPCS (Fixed)
+      - name: Install PHPCS & WPCS
         run: |
           composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
           composer global require "squizlabs/php_codesniffer:^3.7"
@@ -36,13 +36,18 @@ jobs:
         run: |
           ~/.composer/vendor/bin/phpcs --standard=WordPress .
 
-      - name: Security Scan (Trivy)
+      - name: Install Trivy
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.0_Linux-64bit.deb
-          sudo dpkg -i trivy_0.50.0_Linux-64bit.deb
-          trivy fs .
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Run Security Scan
+        run: |
+          trivy fs . --severity HIGH,CRITICAL --exit-code 0
 
   # -------------------------
   # BUILD & DEPLOY (MAIN)
@@ -54,14 +59,14 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build Artifact
         run: |
           zip -r wordpress-${{ github.run_number }}.zip .
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wordpress-build
           path: wordpress-*.zip
@@ -69,6 +74,6 @@ jobs:
       - name: Simulate Deployment
         run: |
           echo "Deploying to WordPress platform..."
-          echo "Updating tenants..."
+          echo "Applying new build..."
           echo "Restarting services..."
-          echo "Deployment completed successfully!"
+          echo "Deployment successful!"
