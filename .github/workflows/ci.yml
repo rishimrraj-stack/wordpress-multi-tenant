@@ -1,0 +1,66 @@
+name: WordPress CI/CD
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: PHP Lint
+        run: |
+          find . -name "*.php" -exec php -l {} \;
+
+      - name: Install PHPCS
+        run: |
+          composer global require "squizlabs/php_codesniffer=*"
+          composer global require wp-coding-standards/wpcs
+
+      - name: Run WordPress Coding Standards
+        run: |
+          ~/.composer/vendor/bin/phpcs --standard=WordPress .
+
+      - name: Security Scan (Trivy)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.50.0_Linux-64bit.deb
+          trivy fs .
+
+  build-deploy:
+    runs-on: ubuntu-latest
+    needs: quality-check
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Artifact
+        run: |
+          zip -r wordpress-${{ github.run_number }}.zip .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: wordpress-build
+          path: wordpress-*.zip
+
+      - name: Simulate Deployment
+        run: |
+          echo "Deploying to server..."
+          echo "Updating WordPress..."
+          echo "Deployment complete!"
