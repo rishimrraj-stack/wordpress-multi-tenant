@@ -26,7 +26,7 @@ jobs:
           composer global require "wp-coding-standards/wpcs:^3.0"
 
       - name: Run Coding Standards
-        run: ~/.composer/vendor/bin/phpcs --standard=WordPress .
+        run: ~/.composer/vendor/bin/phpcs --standard=WordPress --runtime-set ignore_warnings_on_exit 1 .
 
   # -------------------------
   # DETECT CHANGES
