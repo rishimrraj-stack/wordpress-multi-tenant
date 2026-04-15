@@ -7,11 +7,17 @@ This runbook provides operational steps to deploy, manage, monitor, and troubles
 The system includes:
 
 Nginx (reverse proxy)
+
 WordPress tenants (tenant1, tenant2, tenant3)
+
 MySQL
+
 Prometheus + Grafana (monitoring)
+
 Loki + Promtail (logging)
+
 🚀 1. Starting the System
+
 docker-compose up -d
 
 👉 This will start:
