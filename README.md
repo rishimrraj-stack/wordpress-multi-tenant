@@ -216,5 +216,18 @@ This project demonstrates:
 * Observability (metrics + logs)
 * Production-grade DevOps practices
 
+<img width="1360" height="768" alt="Screenshot (14)" src="https://github.com/user-attachments/assets/83029ec8-d898-4446-99a4-a562471b5c53" />
+
+<img width="1360" height="768" alt="Screenshot (32)" src="https://github.com/user-attachments/assets/a5cf3f21-db42-4a97-9b9d-7e7f5231d18d" />
+
+<img width="1360" height="768" alt="Screenshot (33)" src="https://github.com/user-attachments/assets/bdb12fea-832b-403b-aa9f-915b515a070b" />
+
+<img width="1360" height="768" alt="Screenshot (34)" src="https://github.com/user-attachments/assets/a04c8dec-4b33-4484-9138-e160276a98c5" />
+
+<img width="1360" height="768" alt="Screenshot (37)" src="https://github.com/user-attachments/assets/5cc0bcc9-dc54-43f1-8b3c-530d1e192ede" />
+
+<img width="1360" height="768" alt="Screenshot (40)" src="https://github.com/user-attachments/assets/6e0c9442-b5ad-43e7-907d-4600f3b2b811" />
 
 <img width="1360" height="768" alt="Screenshot (42)" src="https://github.com/user-attachments/assets/d070b43f-bfd9-45b3-b0d4-381b68f5bb63" />
+
+
