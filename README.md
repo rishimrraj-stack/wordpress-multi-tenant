@@ -215,3 +215,6 @@ This project demonstrates:
 * Container orchestration
 * Observability (metrics + logs)
 * Production-grade DevOps practices
+
+
+<img width="1360" height="768" alt="Screenshot (42)" src="https://github.com/user-attachments/assets/d070b43f-bfd9-45b3-b0d4-381b68f5bb63" />
