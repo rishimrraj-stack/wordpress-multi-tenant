@@ -26,4 +26,4 @@ This project implements a multi-tenant WordPress platform using Docker Compose w
    - tenants/
    - nginx/
    - monitoring/
-   - docker-compose.yml
+   - docker-compose.yml# wordpress-multi-tenant
